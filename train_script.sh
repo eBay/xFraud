@@ -15,7 +15,7 @@ export PATH_DB='./data/feat_store_publish.db'
 
 export PYTHONPATH="${PATH_PYHGT}:${PYTHONPATH}"
 
-python train_detector.py ${PATH_G} \
+python xfraud/train_detector.py ${PATH_G} \
     --path-result='exp_result.csv' \
     --width=${WIDTH} --depth=${DEPTH} --batch-size=${BATCH_SIZE} \
     --n-layers=${LAYER} --n-hid=${N_HID}\

@@ -1,5 +1,5 @@
 conda env create -f environment_20210301.yml
-conda activate eth
+conda activate xfraud
 
 conda install pytorch=1.5.0 torchvision cudatoolkit=10.1 -c pytorch -y
 pip install --no-index \
