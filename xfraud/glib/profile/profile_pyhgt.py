@@ -43,7 +43,7 @@ def main(path_graph_edge, sample_depth=2, sample_number=16):
     target_ids = {'node_link_id': [(gfl[e], gdl.node_ts[e]) for e in src]}
 
     with timeit(logger, 'subsample'):
-        from pyHGT.data import sample_subgraph
+        from pyHGT.pyHGT.data import sample_subgraph
         sample_subgraph(
             graph, time_range=train_range, inp=target_ids,
             sampled_depth=sample_depth,

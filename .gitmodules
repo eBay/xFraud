@@ -1,0 +1,3 @@
+[submodule "pyHGT"]
+	path = pyHGT
+	url = https://github.com/acbull/pyHGT.git

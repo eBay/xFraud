@@ -203,7 +203,7 @@ class GeneralConv(nn.Module):
                 edge_type_self=0, 
                 num_node_type=num_node_type, num_edge_type=num_edge_type)
         elif self.conv_name == 'hgt':
-            from pyHGT.conv import HGTConv
+            from pyHGT.pyHGT.conv import HGTConv
             if in_hid==out_hid:
                 self.base_conv = HGTConv(
                     in_hid, out_hid, 

@@ -1,5 +1,4 @@
 import logging
-
 import tqdm
 
 
@@ -8,7 +7,7 @@ def load_graph(df_edges):
     logger.setLevel(logging.INFO)
 
     try:
-        from pyHGT.data import Graph
+        from pyHGT.pyHGT.data import Graph
     except ImportError as e:
         logger.critical(
             'Please make sure that original pyHGT package is '

@@ -8,12 +8,12 @@ export N_BATCH=32
 export MAX_EPOCHS=5
 export PATIENCE=64
 export CONV='het-emb'
-export PATH_PYHGT='./pyHGT'
 
 export PATH_G='./data/g_publish.parquet'
 export PATH_DB='./data/feat_store_publish.db'
 
-export PYTHONPATH="${PATH_PYHGT}:${PYTHONPATH}"
+#export PATH_PYHGT='./pyHGT'
+#export PYTHONPATH="${PATH_PYHGT}:${PYTHONPATH}"
 
 python xfraud/train_detector.py ${PATH_G} \
     --path-result='exp_result.csv' \

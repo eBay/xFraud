@@ -146,7 +146,5 @@ def create_naive_het_homo_graph_from_edges(df):
 
         edge_list = view.to_numpy().tolist()
 
-    # import pdb; pdb.set_trace()
-
     return NaiveHetGraph(node_type, edge_list,
                          seed_label=seed_label, node_ts=node_ts)
