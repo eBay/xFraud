@@ -1,3 +1,6 @@
+# !/bin/bash
+# run this script under project's dir
+
 conda env create -f environment_20210301.yml
 conda activate xfraud
 

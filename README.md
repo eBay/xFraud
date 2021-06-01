@@ -26,8 +26,17 @@ from graphs to facilitate further process in business unit.
 Setup the python environment with `conda` and install `pytorch` and its dependencies. 
 
 ```bash
-bash install-env-publish.sh
+bash ./scripts/install-env-publish.sh
 ```
+
+#### Third Party Packages (Optional)
+If you are going to try the code of `pyHGT` in this project, please run
+
+```bash
+bash ./scripts/add-submodules.sh
+```
+
+to include `pyHGT` as submodules
 
 ## 2. Feature store setup
 This step is to prevent the OOM issue for loading large feature data.
@@ -42,24 +51,26 @@ python xfraud/setup_feature_store_publish.py
 ## 3. Detector: Training and testing 
 
 ```bash
-bash train_script_publish.sh
+bash ./scripts/run-detector.sh
 ```
+Commonly used parameters are listed in the shell script.
+
 ## 4. Explainer
 
 ```bash 
-python xfraud/run_explainer.py
+python ./xfraud/run_explainer.py
 ```
 
 ## 5. Explainer quantitative analysis (top k hit rate)
 
 ```bash
-python xfraud/explainer-eval-hitrate/ours.py
-python xfraud/explainer-eval-hitrate/random-baseline.py
+python ./xfraud/explainer-eval-hitrate/ours.py
+python ./xfraud/explainer-eval-hitrate/random-baseline.py
 ```
 
 # Data files
 We provide a small sample of the transaction graph and features in `./data`. <br>
-We also provide the sample, its annotations, and evaluation results (in `./explainer-eval-hitrate`) we describe in 
+We also provide the sample, its annotations, and evaluation results (in `./xfraud/explainer-eval-hitrate`) we describe in 
 Section 4.2. <br>
 All the datafiles are described in the scripts that utilize them. 
 
@@ -73,7 +84,8 @@ dataset (desensitized transaction records) after the legal review at eBay.
 # License Information
 Copyright 2020-2021 eBay Inc.
 
-Author/Developer: Wei Min, Zhichao Han, Zitao Zhang 
+Author/Developer: Susie Xi Rao, Shuai Zhang, Zhichao Han, Zitao Zhang, Wei Min, Zhiyao Chen, Yinan Shan, Yang Zhao, 
+Ce Zhang
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the 
 License. You may obtain a copy of the License at <br>
@@ -83,30 +95,30 @@ Unless required by applicable law or agreed to in writing, software distributed 
 specific language governing permissions and limitations under the License.
 
 # Reference
-- `./pyHGT` is from the original HGT implementation, 
+- `pyHGT` is from the original HGT implementation wit `MIT` license, 
 see [https://github.com/acbull/pyHGT/tree/master/pyHGT](https://github.com/acbull/pyHGT/tree/master/pyHGT). 
 
 Other python package licenses are listed below:
 ```
  Name                    Version          License
 
- dill                    0.3.0            BSD License                                                                                                                                    
- fire                    0.3.1            Apache Software License                                                                                                                        
- gensim                  3.8.2            GNU Lesser General Public License v2 or later (LGPLv2+)                                                                                        
- networkx                2.4              BSD License                                                                                                                                    
- pandas                  0.24.2           BSD                                                                                                                                            
- plyvel                  1.3.0            BSD License                                                                                                                                    
- py4j                    0.10.7           BSD License     
- pyarrow                 0.15.1           Apache Software License                                                                                                                                                                                                                                                       
- scikit-learn            0.22.2.post1     new BSD                                                                                                                                        
- scipy                   1.4.1            BSD License                                                                                                                                    
- seaborn                 0.9.0            BSD License                                                                                                                                    
- torch                   1.5.0            BSD License                                                                                                                                    
- torch-cluster           1.5.7            MIT                                                                                                                                            
- torch-geometric         1.5.0            UNKNOWN                                                                                                                                        
- torch-scatter           2.0.5            MIT                                                                                                                                            
- torch-sparse            0.6.7            MIT                                                                                                                                            
- torch-spline-conv       1.2.0            MIT                                                                                                                                            
- torchvision             0.6.0a0+82fd1c8  BSD                                                                                                                                            
- tqdm                    4.56.0           MIT License, Mozilla Public License 2.0 (MPL 2.0)                                                                                              
+ dill                    0.3.0            BSD License
+ fire                    0.3.1            Apache Software License
+ gensim                  3.8.2            GNU Lesser General Public License v2 or later (LGPLv2+)
+ networkx                2.4              BSD License
+ pandas                  0.24.2           BSD
+ plyvel                  1.3.0            BSD License 
+ py4j                    0.10.7           BSD License
+ pyarrow                 0.15.1           Apache Software License
+ scikit-learn            0.22.2.post1     new BSD
+ scipy                   1.4.1            BSD License
+ seaborn                 0.9.0            BSD License
+ torch                   1.5.0            BSD License
+ torch-cluster           1.5.7            MIT
+ torch-geometric         1.5.0            MIT
+ torch-scatter           2.0.5            MIT
+ torch-sparse            0.6.7            MIT
+ torch-spline-conv       1.2.0            MIT
+ torchvision             0.6.0a0+82fd1c8  BSD
+ tqdm                    4.56.0           MIT License, Mozilla Public License 2.0 (MPL 2.0)
 ```
