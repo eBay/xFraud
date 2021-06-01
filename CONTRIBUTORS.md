@@ -1,0 +1,11 @@
+# Contributors (in alphabetic order)
+
+ - Ce Zhang (ETHZ)
+ - Shuai Zhang (ETHZ)
+ - Susie Xi Rao (ETHZ)
+ - Wei Min (eBay)
+ - Yang Zhao (eBay)
+ - Yinan Shan (eBay)
+ - Zhichao Han (eBay)
+ - Zhiyao Chen (eBay)
+ - Zitao Zhang (eBay)
