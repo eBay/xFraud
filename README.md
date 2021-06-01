@@ -95,7 +95,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 specific language governing permissions and limitations under the License.
 
 # Reference
-- `pyHGT` is from the original HGT implementation wit `MIT` license, 
+- `pyHGT` is from the original HGT implementation with `MIT` license, 
 see [https://github.com/acbull/pyHGT/tree/master/pyHGT](https://github.com/acbull/pyHGT/tree/master/pyHGT). 
 
 Other python package licenses are listed below:
