@@ -6,8 +6,9 @@ binaryornot==0.4.4
 bitarray==0.9.3
 boolean.py==3.8
 cached-property==1.5.2
-certifi==2020.12.5
+certifi==2021.5.30
 cffi==1.14.5
+chardet @ file:///tmp/build/80754af9/chardet_1607706768982/work
 click==8.0.0
 colorama==0.4.4
 commoncode==21.5.12
@@ -57,7 +58,7 @@ numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1596233707986/work
 olefile==0.46
 packageurl-python==0.9.4
 packaging==20.9
-pandas==0.24.2
+pandas==1.2.4
 patch==1.16
 pdfminer.six==20201018
 pefile==2021.5.13

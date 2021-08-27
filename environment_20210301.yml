@@ -9,6 +9,7 @@ dependencies:
   - pyarrow=0.15.1
   - python=3.7.5
   - pip:
+    - chardet=4.0.0=py37h06a4308_1003
     - dill==0.3.0
     - fire==0.3.1
     - gensim==3.8.2
