@@ -1,5 +1,5 @@
 # !/bin/bash
-# run this script under project's dir
+# run this script from project's dir
 
 export WIDTH=16
 export DEPTH=6
@@ -15,6 +15,10 @@ export CONV='het-emb'   # model convolution layer type, choices ['', 'logi', 'gc
 export PATH_G='./data/g_publish.parquet'
 export PATH_DB='./data/feat_store_publish.db'
 
+export DIR_RT="$(pwd)"
+echo "Project Dir ${DIR_RT}"
+
+PYTHONPATH="${DIR_RT}:${PYTHONPATH}" \
 python xfraud/run_detector.py ${PATH_G} \
     --path-result='exp_result.csv' \
     --width=${WIDTH} --depth=${DEPTH} --batch-size=${BATCH_SIZE} \
