@@ -45,7 +45,7 @@ For this data sample, to generate the data store is not a necessary step, as we 
 (`./data/feat_store_publish.db`) used in the subsequent scripts.
 
 ```bash
-python xfraud/setup_feature_store_publish.py
+python xfraud/setup_feature_store.py
 ```
 
 ## 3. Detector: Training and testing 
