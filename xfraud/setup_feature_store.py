@@ -16,6 +16,7 @@ import numpy as np
 import networkx as nx
 import tqdm
 import glob
+import fire
 
 from xfraud.glib.fstore import FeatureStore
 
@@ -51,8 +52,12 @@ def main(path_g='./data/g_publish.parquet',
             if neighbor in node_src:
                 neighbor_feat = store.get(key=neighbor, default_value=None)
                 if sum_feat is None:
-                    sum_feat = neighbor_feat
+                    sum_feat = neighbor_feat.copy()
                 else:
                     sum_feat += neighbor_feat
                 cnt_neighbor += 1
         store.put(key=node_id, value=sum_feat/cnt_neighbor)
+
+
+if __name__=="__main__":
+    fire.Fire(main)
