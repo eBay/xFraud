@@ -45,7 +45,7 @@ For this data sample, to generate the data store is not a necessary step, as we 
 (`./data/feat_store_publish.db`) used in the subsequent scripts.
 
 ```bash
-python xfraud/setup_feature_store.py
+bash ./scripts/setup-feature-store.py
 ```
 
 ## 3. Detector: Training and testing 
@@ -102,6 +102,7 @@ Other python package licenses are listed below:
 ```
  Name                    Version          License
 
+ chardet                 3.0.4            GNU Library or Lesser General Public License (LGPL)  
  dill                    0.3.0            BSD License
  fire                    0.3.1            Apache Software License
  gensim                  3.8.2            GNU Lesser General Public License v2 or later (LGPLv2+)
@@ -121,4 +122,5 @@ Other python package licenses are listed below:
  torch-spline-conv       1.2.0            MIT
  torchvision             0.6.0a0+82fd1c8  BSD
  tqdm                    4.56.0           MIT License, Mozilla Public License 2.0 (MPL 2.0)
+
 ```
