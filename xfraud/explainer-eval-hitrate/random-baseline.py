@@ -1,29 +1,31 @@
-#!/usr/bin/env python
-# coding: utf-8
+# Copyright 2020-2021 eBay Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     https://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-import math
+
 import tqdm
 import random
 import pandas as pd
 import numpy as np
-import networkx as nx
-import itertools
 from collections import Counter
-import scipy.stats
-import sklearn
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import roc_auc_score
-import matplotlib.pyplot as plt
 import warnings
+from argparse import ArgumentParser
+
 warnings.filterwarnings('ignore')
-from optparse import OptionParser
 
-parser = OptionParser()
-parser.add_option('--random-draw', action = 'store', dest = 'random_draw', type = int, default = 100, help = 'Random draws to break the tie in ranking topk edges.')
-parser.add_option('--edge-agg', action = 'store', dest = 'edge_agg', default = 'avg', choices = ['avg', 'min', 'sum'], help = 'Aggregation method to compute edge importance score based on the node importance scores.')
+parser = ArgumentParser()
+parser.add_argument('--random-draw', action='store', dest='random_draw', type=int, default=100, help='Random draws to break the tie in ranking topk edges.')
+parser.add_argument('--edge-agg', action='store', dest='edge_agg', default='avg', choices=['avg', 'min', 'sum'], help='Aggregation method to compute edge importance score based on the node importance scores.')
 
-(options, args) = parser.parse_args()
-print ("Options:", options)
+args = parser.parse_args()
+print("Options:", args)
 
 # Load in the annotation file with computed avg node importance, the data seed, the edge weights by explainer, the edges in the communities.
 DataNodeImp = pd.read_csv('./results/df_node_weight_with_avgimp.csv')
@@ -38,7 +40,7 @@ comm1 = DataSeed[DataSeed.y==1].id.unique()
 hitrate_df_randruns = pd.DataFrame(index=['all', 'comm0', 'comm1'] + list(range(0,41)))
 RandDataEdgeWeight_df = pd.DataFrame()
 
-print(f'Randomly assigning edge weights {options.random_draw} times ...')
+print(f'Randomly assigning edge weights {args.random_draw} times ...')
 for _ in range(0,10):
     
     random.seed(_)
@@ -94,11 +96,11 @@ for _ in range(0,10):
         src_row = df_node_weight[(df_node_weight['node_id']==src_node_id) & (df_node_weight['community_id']==cc_id)].iloc[0]
         dst_row = df_node_weight[(df_node_weight['node_id']==dst_node_id) & (df_node_weight['community_id']==cc_id)].iloc[0]
 
-        if options.edge_agg == 'min':
+        if args.edge_agg == 'min':
             edge_imp_annotate = min(src_row['importance_avg'], dst_row['importance_avg']) 
-        if options.edge_agg == 'avg':
+        if args.edge_agg == 'avg':
             edge_imp_annotate = np.mean([src_row['importance_avg'], dst_row['importance_avg']])
-        if options.edge_agg == 'sum':
+        if args.edge_agg == 'sum':
             edge_imp_annotate = src_row['importance_avg'] + dst_row['importance_avg']
             
         df_edge_weight['importance'].iloc[i] = edge_imp_annotate
@@ -116,7 +118,7 @@ for _ in range(0,10):
 
             hitrate_list_topk = []
 
-            for r in tqdm.tqdm(range(0,options.random_draw)):
+            for r in tqdm.tqdm(range(0,args.random_draw)):
 
                 random.seed(r)
                 if count_largest <= k:
@@ -141,7 +143,7 @@ for _ in range(0,10):
         comm1_hitrate = np.mean([h for (i,h) in enumerate(hitrate_list_topk_comm) if i in comm1])    
 
         hitrate_df_randruns[f'top{k}-rand{_}'] = [all_hitrate, comm0_hitrate, comm1_hitrate] + hitrate_list_topk_comm
-hitrate_df_randruns.to_csv(f'./results/topk-hitrate-randruns{options.random_draw}-{options.edge_agg}.csv')
+hitrate_df_randruns.to_csv(f'./results/topk-hitrate-randruns{args.random_draw}-{args.edge_agg}.csv')
 
 # Compute \delta(Ours-Random)
 hitrate_df_avg = pd.DataFrame(index=['all', 'comm0', 'comm1'])
@@ -157,7 +159,7 @@ for k in [i*5 for i in range(1,6)]:
 
     hitrate_df_avg[f'top{k}'] = [all_hitrate_avg, comm0_hitrate_avg, comm1_hitrate_avg]
 
-hitrate_df = pd.read_csv(f'./results/topk-{options.random_draw}-{options.edge_agg}.csv')
+hitrate_df = pd.read_csv(f'./results/topk-{args.random_draw}-{args.edge_agg}.csv')
 hitrate_df.set_index('Unnamed: 0', inplace=True)
 
 hitrate_df_ours = hitrate_df[:3]
@@ -165,4 +167,4 @@ print('Ours:', hitrate_df_ours)
 print('Random:', hitrate_df_avg)
 diff = hitrate_df_ours - hitrate_df_avg
 print('Diff:', diff)
-diff.to_csv(f'./results/topk-ours-vs-randruns-{options.random_draw}-{options.edge_agg}.csv')
+diff.to_csv(f'./results/topk-ours-vs-randruns-{args.random_draw}-{args.edge_agg}.csv')

@@ -1,39 +1,44 @@
-#!/usr/bin/env python
-# coding: utf-8
+# Copyright 2020-2021 eBay Inc.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     https://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 
 # - Edge weight is inferred by GNNExplainer and node importance is given by five Ebay annotators. Not every annotator has annotated each node.
 # - Seed is the txn to explain.
 # - id is the community id. 
 
-import math
 from tqdm.auto import tqdm
 import random
 import pandas as pd
 import numpy as np
-import networkx as nx
 import itertools
 from collections import Counter
-import scipy.stats
 import sklearn
-from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
-import matplotlib.pyplot as plt
 import warnings
+from argparse import ArgumentParser
+
 warnings.filterwarnings('ignore')
-from optparse import OptionParser
 
-parser = OptionParser()
-parser.add_option('--random-draw', action = 'store', dest = 'random_draw', type = int, default = 100, help = 'Random draws to break the tie in ranking topk edges.')
-parser.add_option('--edge-agg', action = 'store', dest = 'edge_agg', default = 'avg', choices = ['avg', 'min', 'sum'], help = 'Aggregation method to compute edge importance score based on the node importance scores.')
+parser = ArgumentParser()
+parser.add_argument('--random-draw', action='store', dest='random_draw', type=int, default=100, help='Random draws to break the tie in ranking topk edges.')
+parser.add_argument('--edge-agg', action='store', dest='edge_agg', default='avg', choices=['avg', 'min', 'sum'], help='Aggregation method to compute edge importance score based on the node importance scores.')
 
-(options, args) = parser.parse_args()
-print ("Options:", options)
+args = parser.parse_args()
+print("Options:", args)
 
 # Load in the annotation file, the data seed, the edge weights by explainer, the edges in the communities.
-DataNodeImp = pd.read_csv('./input/annotation_publish.csv')
-DataSeed = pd.read_csv('./input/data-seed.txt')
-DataEdgeWeight = pd.read_csv('./input/data-edge-weight.txt')
-df_e = pd.read_csv('./input/masked_df_e.csv')
+DataNodeImp = pd.read_csv('./xfraud/explainer-eval-hitrate/input/annotation_publish.csv')
+DataSeed = pd.read_csv('./xfraud/explainer-eval-hitrate/input/data-seed.txt')
+DataEdgeWeight = pd.read_csv('./xfraud/explainer-eval-hitrate/input/data-edge-weight.txt')
+df_e = pd.read_csv('./xfraud/explainer-eval-hitrate/input/masked_df_e.csv')
 
 print('AUC score of the sample:', roc_auc_score(DataSeed.y, DataSeed['yhat']))
 
@@ -98,7 +103,7 @@ for i, row in DataNodeImp.iterrows():
         DataNodeImp.loc[i, 'importance_avg'] = sum_importance/cnt_user
 df_node_weight = DataNodeImp.copy()   
 print('Value counts of node importance scores:', Counter(df_node_weight.importance_avg))
-df_node_weight.to_csv('./results/df_node_weight_with_avgimp.csv')
+# df_node_weight.to_csv('./results/df_node_weight_with_avgimp.csv')
 
 # Preprocess explainer weights: calculate undirectional edge weight by taking the max weight of bidirectional edge weights.
 # From node importance scores to edge importance score: "min"/"avg"/"sum". 
@@ -116,11 +121,11 @@ for i, row in tqdm(df_edge_weight.iterrows(), total=len(df_edge_weight), ncols=8
     src_row = df_node_weight[(df_node_weight['node_id']==src_node_id) & (df_node_weight['community_id']==cc_id)].iloc[0]
     dst_row = df_node_weight[(df_node_weight['node_id']==dst_node_id) & (df_node_weight['community_id']==cc_id)].iloc[0]
 
-    if options.edge_agg == 'min':
+    if args.edge_agg == 'min':
         edge_imp_annotate = min(src_row['importance_avg'], dst_row['importance_avg']) 
-    if options.edge_agg == 'avg':
+    if args.edge_agg == 'avg':
         edge_imp_annotate = np.mean([src_row['importance_avg'], dst_row['importance_avg']])
-    if options.edge_agg == 'sum':
+    if args.edge_agg == 'sum':
         edge_imp_annotate = src_row['importance_avg'] + dst_row['importance_avg']
 
     edge_weights = DataEdgeWeight[DataEdgeWeight['src'].isin([src_node_id, dst_node_id]) & 
@@ -141,7 +146,7 @@ print('Average edges per community:', df_edge_weight.shape[0]/41)
 
 df_edge_weight.rename(columns={'source':'src', 'target': 'dst', 'community_id': 'id', 
                        'importance': 'edge_importance', 'weight': 'edge_weight'}, inplace=True)
-df_edge_weight.to_csv('./results/df_edge_weight_imp-{}.csv'.format(options.edge_agg))
+# df_edge_weight.to_csv('./results/df_edge_weight_imp-{}.csv'.format(args.edge_agg))
 df_edge_weight.rename(columns={'edge_importance':'importance'}, inplace=True)
 
 # Topk hit rate
@@ -157,7 +162,7 @@ for k in [i*5 for i in range(1,6)]:
         
         hitrate_list_topk = []
         
-        for r in tqdm(range(0,options.random_draw), total=options.random_draw, ncols=80, mininterval=5):            
+        for r in tqdm(range(0, args.random_draw), total=args.random_draw, ncols=80, mininterval=5):
             random.seed(r)
             if count_largest <= k:
                 src_id_human_topk = df_edge_weight_sub[['src','dst']].values.tolist()
@@ -179,8 +184,8 @@ for k in [i*5 for i in range(1,6)]:
     
     hitrate_df['top{}'.format(k)] = [all_hitrate, comm0_hitrate, comm1_hitrate] + hitrate_list_topk_comm
 
-hitrate_df.to_csv('./results/topk-{}-{}.csv'.format(options.random_draw, options.edge_agg), index=True)
-	
+# hitrate_df.to_csv('./results/topk-{}-{}.csv'.format(args.random_draw, args.edge_agg), index=True)
+
 ours = hitrate_df.loc[['all', 'comm0', 'comm1']]
 print('Our topk hit rate:', ours)
 
