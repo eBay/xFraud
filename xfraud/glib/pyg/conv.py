@@ -18,7 +18,8 @@ class HetEmbConv(MessagePassing):
                  negative_slope=0.2, dropout=0, bias=True,
                  num_node_type=-1, num_edge_type=-1,
                  edge_type_self=0, **kwargs):
-        super(HetEmbConv, self).__init__(aggr='add', **kwargs)
+        super().__init__(node_dim=0, aggr='add', **kwargs)
+        # super(HetEmbConv, self).__init__(aggr='add', **kwargs)
 
         self.in_channels = in_channels
         self.out_channels = out_channels
@@ -112,7 +113,8 @@ class HetEmbConv(MessagePassing):
 
         alpha = (xq_i * self.att_i).sum(-1) + (x_k * self.att_j).sum(-1)
         alpha = F.leaky_relu(alpha, self.negative_slope)
-        alpha = softmax(alpha, edge_index_i, size_i)
+        alpha = softmax(alpha, edge_index_i, None, size_i)
+        # alpha = softmax(alpha, edge_index_i, size_i)
 
         # Sample attention coefficients stochastically.
         alpha = F.dropout(alpha, p=self.dropout, training=self.training)

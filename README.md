@@ -23,7 +23,7 @@ from graphs to facilitate further process in business unit.
 
 ## 1. Env setup
 
-Setup the python environment with `conda` and install `pytorch` and its dependencies. 
+Setup the python environment with `conda` and install `pytorch` and its dependencies. Notice for the `pytorch` related package, you may install the correct version to fit your `cuda` device. In the following experiment scripts, I will use the `cuda10.1` version.
 
 ```bash
 bash ./scripts/install-env-publish.sh
