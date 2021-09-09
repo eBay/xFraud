@@ -1,10 +1,10 @@
-certifi==2021.5.30
+# certifi==2021.5.30
 charset-normalizer==2.0.4
 cycler==0.10.0
 decorator==5.0.9
 dill==0.3.0
 fire==0.3.1
-gensim==3.8.2
+# gensim==3.8.2
 googledrivedownloader==0.4
 idna==3.2
 isodate==0.6.0
