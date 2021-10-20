@@ -102,10 +102,8 @@ Other python package licenses are listed below:
 ```
  Name                    Version          License
 
- chardet                 3.0.4            GNU Library or Lesser General Public License (LGPL)  
  dill                    0.3.0            BSD License
  fire                    0.3.1            Apache Software License
- gensim                  3.8.2            GNU Lesser General Public License v2 or later (LGPLv2+)
  networkx                2.4              BSD License
  pandas                  0.24.2           BSD
  plyvel                  1.3.0            BSD License 
