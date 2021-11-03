@@ -75,14 +75,14 @@ python ./xfraud/explainer-eval-hitrate/random-baseline.py
 ## Supplement material:
 ### 6. Centrality measures on 41 communities
 ```bash
-cd ./xfraud/06Centrality_measures/
+cd ./xfraud/supplement/06Centrality_measures/
 python edge_betweenness.py --type-centrality 'edge_betweenness_centrality' 
 python line_graph_node_centrality.py --type-centrality 'degree'
 ```
 
 ### 7. Learning the hybrid explainer
 ```bash
-cd ./xfraud/07Learning_hybrid/
+cd ./xfraud/supplement/07Learning_hybrid/
 
 # ridge
 learn_equation-ridge.ipynb
@@ -99,7 +99,7 @@ python ours-learn.py
 
 ### 8. Visualizing the communities
 ```bash
-cd ./xfraud/08Vis/
+cd ./xfraud/supplement/08Vis/
 
 plot_community_prettify-hybrid.ipynb
 ```
