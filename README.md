@@ -6,6 +6,10 @@
   - [3. Detector: Training and testing](#3-detector-training-and-testing)
   - [4. Explainer](#4-explainer)
   - [5. Explainer quantitative analysis (top k hit rate)](#5-explainer-quantitative-analysis-top-k-hit-rate)
+  - [Supplement material](#supplement-material)
+    - [6. Centrality measures on 41 communities](#6-centrality-measures-on-41-communities)
+    - [7. Learning the hybrid explainer](#7-learning-the-hybrid-explainer)
+    - [8. Visualizing the communities](#8-visualizing-the-communities)
 - [Data files](#data-files)
     - [Note](#note)
 - [License Information](#license-information)
@@ -66,6 +70,38 @@ python ./xfraud/run_explainer.py
 ```bash
 python ./xfraud/explainer-eval-hitrate/ours.py
 python ./xfraud/explainer-eval-hitrate/random-baseline.py
+```
+
+## Supplement material:
+### 6. Centrality measures on 41 communities
+```bash
+cd ./xfraud/06Centrality_measures/
+python edge_betweenness.py --type-centrality 'edge_betweenness_centrality' 
+python line_graph_node_centrality.py --type-centrality 'degree'
+```
+
+### 7. Learning the hybrid explainer
+```bash
+cd ./xfraud/07Learning_hybrid/
+
+# ridge
+learn_equation-ridge.ipynb
+
+# grid search with user defined A
+python ours_learn-grid-A.py
+
+# polynomial
+learn_equation-polynomial.ipynb
+
+# load the learned parameters and get the hybrid explainer weighs
+python ours-learn.py
+```
+
+### 8. Visualizing the communities
+```bash
+cd ./xfraud/08Vis/
+
+plot_community_prettify-hybrid.ipynb
 ```
 
 # Data files
