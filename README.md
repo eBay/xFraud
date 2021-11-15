@@ -158,3 +158,16 @@ Other python package licenses are listed below:
  tqdm                    4.56.0           MIT License, Mozilla Public License 2.0 (MPL 2.0)
 
 ```
+## Citation
+```
+@article{rao2021xfraud,
+  title={xFraud: Explainable Fraud Transaction Detection},
+  author={Rao, Susie Xi and Zhang, Shuai and Han, Zhichao and Zhang, Zitao and Min, Wei and Chen, Zhiyao and Shan, Yinan and Zhao, Yang and Zhang, Ce},
+  journal={VLDB},
+  volumn={15},
+  Issue={3},
+  year={2022}, 
+  howpublished = {\url{https://github.com/eBay/xFraud}},
+  doi = {10.14778/3494124.3494128},
+}
+```
