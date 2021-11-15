@@ -16,7 +16,7 @@
 - [Reference](#reference)
   
 # Introduction
-This is an open source version of xFraud code https://arxiv.org/abs/2011.12193
+This paper is accepted by VLDB 2022, and is published in Vol. 15, Issue 3.
 
 xFraud is an explainable Fraud transaction prediction system. xFraud is composed of a predictor which learns expressive 
 representations for malicious transaction detection from the heterogeneous transaction graph via a self-attentive 
@@ -107,7 +107,7 @@ plot_community_prettify-hybrid.ipynb
 # Data files
 We provide a small sample of the transaction graph and features in `./data`. <br>
 We also provide the sample, its annotations, and evaluation results (in `./xfraud/explainer-eval-hitrate`) we describe in 
-Section 4.2. <br>
+the section about explainer. <br>
 All the datafiles are described in the scripts that utilize them. 
 
 ## Note
