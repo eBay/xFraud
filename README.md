@@ -112,10 +112,11 @@ All the datafiles are described in the scripts that utilize them.
 
 ## Note
 The data we use in the paper is proprietary, i.e., 
-real-world transaction records on the eBay platform. At this point we can only share a small dummy sample dataset 
-to show the data structure and our workflow. In the long run, it would be possible to share the eBay-small 
-dataset (desensitized transaction records) after the legal review at eBay. 
-
+real-world transaction records on the eBay platform. 
+We can share our eBay-small dataset (desensitized transaction records) after signing a data sharing agreement provided 
+by eBay and approved by legal team in eBay. The data can only be shared for a legitimate, non-commercial purpose. 
+Please email "zitzhang@ebay.com" with title "xFraud data request" and provide your name, address, email address, and 
+we will help you submit the request.
 
 # License Information
 Copyright 2020-2021 eBay Inc.
