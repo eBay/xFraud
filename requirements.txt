@@ -37,7 +37,7 @@ six==1.15.0
 smart-open==5.2.1
 # termcolor==1.1.0
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.8.1+cu101
+torch==1.13.1
 torchaudio==0.8.1
 torchvision==0.9.1
 
